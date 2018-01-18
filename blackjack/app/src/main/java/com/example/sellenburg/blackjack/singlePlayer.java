@@ -41,8 +41,6 @@ public class singlePlayer extends AppCompatActivity {
     int dealerTotal = 0;
     int dealerTurnTotal = 0;
 
-<<<<<<< HEAD
-=======
     ArrayList<Integer> cardsList =  new ArrayList<Integer>(Arrays.asList(R.drawable.ace_of_clubs, R.drawable.ace_of_diamonds, R.drawable.ace_of_hearts, R.drawable.ace_of_spades,
             R.drawable.eight_of_clubs, R.drawable.eight_of_diamonds, R.drawable.eight_of_hearts, R.drawable.eight_of_spades,
             R.drawable.five_of_clubs, R.drawable.five_of_diamonds, R.drawable.five_of_hearts, R.drawable.five_of_spades,
@@ -56,8 +54,6 @@ public class singlePlayer extends AppCompatActivity {
             R.drawable.six_of_clubs, R.drawable.six_of_diamonds, R.drawable.six_of_hearts, R.drawable.six_of_spades,
             R.drawable.ten_of_clubs, R.drawable.ten_of_diamonds, R.drawable.ten_of_hearts, R.drawable.ten_of_spades,
             R.drawable.two_of_clubs, R.drawable.two_of_diamonds, R.drawable.two_of_hearts, R.drawable.two_of_spades));
-
->>>>>>> b4127f539f4b542c686d836eb59d661a95672096
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
