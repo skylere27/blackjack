@@ -28,13 +28,14 @@ public class singlePlayer extends AppCompatActivity {
     * dealerTurn
     *   uses the deal
     *   has its own logic for when to hit/stand
-    *
+    * assdf
     * */
 
     int userTotal = 0;
     int userTurnTotal = 0;
     int dealerTotal = 0;
     int dealerTurnTotal = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
