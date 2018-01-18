@@ -28,7 +28,7 @@ public class singlePlayer extends AppCompatActivity {
     * dealerTurn
     *   uses the deal
     *   has its own logic for when to hit/stand
-    *
+    * assdf
     * */
 
     int userTotal = 0;
