@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Called when user taps single-player mode
     public void singleMode(View view) {
-        Intent intent = new Intent(this, singlePlayer.class);
+        Intent intent = new Intent(this, singlePlayer.class); //creates a new page
         //String text = "YOU ARE IN SINGLE PLAYER MODE";
         //intent.putExtra(text);
         startActivity(intent);
