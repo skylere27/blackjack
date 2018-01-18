@@ -31,11 +31,14 @@ public class singlePlayer extends AppCompatActivity {
     *
     * */
 
+    int userTotal = 0;
+    int userTurnTotal = 0;
+    int dealerTotal = 0;
+    int dealerTurnTotal = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_player);
     }
-
-
 }
