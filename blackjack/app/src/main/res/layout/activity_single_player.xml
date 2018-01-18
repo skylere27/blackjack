@@ -7,10 +7,24 @@
     tools:context="com.example.sellenburg.blackjack.singlePlayer">
 
     <TextView
-        android:id="@+id/text1"
+        android:id="@+id/score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Single Player Mode"
-        tools:layout_editor_absoluteX="133dp"
-        tools:layout_editor_absoluteY="164dp" />
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:text="Your Wins: 0    Dealer Wins: 0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/console2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
+        android:text="Welcome to the game!"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
