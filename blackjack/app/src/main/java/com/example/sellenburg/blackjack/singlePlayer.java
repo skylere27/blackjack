@@ -31,6 +31,8 @@ public class singlePlayer extends AppCompatActivity {
     *
     * */
 
+    //dealCard branch
+    
     int userTotal = 0;
     int userTurnTotal = 0;
     int dealerTotal = 0;
