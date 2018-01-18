@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 public class twoPlayer extends AppCompatActivity {
 
+    // CAN IMPORT THINGS FROM SINGLE PLAYER CLASS TO USE THEM!!
     //TextView text2;
 
     @Override
