@@ -3,6 +3,7 @@ package com.example.sellenburg.blackjack;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.ImageView;
@@ -113,6 +114,17 @@ public class singlePlayer extends AppCompatActivity {
     // On deal, updates image and score
     private int dealCard(int p) {
         int card = deck.remove(0);
+        int cardValue;
+        for (HashMap.Entry<Integer, ArrayList<Integer>> cardArray : valueToCards.entrySet())
+        {
+            Log.i("DEALLOG", cardArray.toString());
+//            for (int i; i < valueToCards.size(); i++) {
+//                if (cardArray.getValue(i) == card) {
+//                    //cardValue = valueToCards;
+//                }
+//            }
+        }
+        // potentially change hashmap to card: value
         if (p == 0) { // dealer turn
             // updates dealer hand and dealer score
 
@@ -123,6 +135,9 @@ public class singlePlayer extends AppCompatActivity {
         return card;
     }
 
+
+
+
     public void hitClicked() {
         //cardImages.get(cardsInHand).setImageResource(dealCard())
         //
@@ -132,6 +147,7 @@ public class singlePlayer extends AppCompatActivity {
 
     }
 //ie computer
+
     private void dealerTurn() {
 //will deal a card and update the image and score
         int recentCard = dealCard(0);
@@ -209,34 +225,23 @@ public class singlePlayer extends AppCompatActivity {
         Collections.shuffle(deck); // deck is shuffled
 
         card1 = findViewById(R.id.card1);
-        P1visuals.add(0,card1);
         card2 = findViewById(R.id.card2);
-        P1visuals.add(1,card2);
         card3 = findViewById(R.id.card3);
-        P1visuals.add(2, card3);
         card4 = findViewById(R.id.card4);
-        P1visuals.add(3,card4);
         card5 = findViewById(R.id.card5);
-        P1visuals.add(4,card5);
         card6 = findViewById(R.id.card6);
-        P1visuals.add(5,card6);
         card7 = findViewById(R.id.card7);
-        P1visuals.add(6,card7);
+        P1visuals = new ArrayList<ImageView>(Arrays.asList(card1, card2, card3, card4, card5, card6, card7));
+
 
         dealer1 = findViewById(R.id.dealer1);
-        P0visuals.add(0,dealer1);
         dealer2 = findViewById(R.id.dealer2);
-        P0visuals.add(1,dealer2);
         dealer3 = findViewById(R.id.dealer3);
-        P0visuals.add(2,dealer3);
         dealer4 = findViewById(R.id.dealer4);
-        P0visuals.add(3,dealer4);
         dealer5 = findViewById(R.id.dealer5);
-        P0visuals.add(4,dealer5);
         dealer6 = findViewById(R.id.dealer6);
-        P0visuals.add(5,dealer6);
         dealer7 = findViewById(R.id.dealer7);
-        P0visuals.add(6,dealer7);
+        P0visuals = new ArrayList<ImageView>(Arrays.asList(dealer1, dealer2, dealer3, dealer4, dealer5, dealer6, dealer7));
 
         card3.setVisibility(View.GONE);
         card4.setVisibility(View.GONE);
@@ -250,15 +255,19 @@ public class singlePlayer extends AppCompatActivity {
         dealer7.setVisibility(View.GONE);
 
         // ON START - FIX, CODE THIS? on click of a START GAME button?
-        card1.setImageResource(dealCard()); // defaults at ace of diamonds
-        card2.setImageResource(dealCard());
+        card1.setImageResource(dealCard(1)); // defaults at ace of diamonds
+        card2.setImageResource(dealCard(1));
+        dealer1.setImageResource(dealCard(0));
+        dealer2.setImageResource(R.drawable.card_back);
         cardsInHand = 2;
+        console.setText("Your hand total: " + userTurnTotal);
 
         // CLICK HIT
         hit = findViewById(R.id.hit);
         hit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                hitClicked();
+                dealCard(1);
+                console.setText("Your hand total: " + userTurnTotal);
             };
         });
 
@@ -266,8 +275,8 @@ public class singlePlayer extends AppCompatActivity {
         stand = findViewById(R.id.stand);
         stand.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                standClicked();
                 dealerTurn();
+                console.setText("Your hand total: " + userTurnTotal + "Dealer hand total: " + dealerTurnTotal);
             };
         });
     }
