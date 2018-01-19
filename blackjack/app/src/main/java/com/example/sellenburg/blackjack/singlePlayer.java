@@ -109,27 +109,27 @@ public class singlePlayer extends AppCompatActivity {
         card1 = findViewById(R.id.card1);
         card2 = findViewById(R.id.card2);
         card3 = findViewById(R.id.card3);
-        card3.setEnabled(false);
         card4 = findViewById(R.id.card4);
-        card4.setEnabled(false);
         card5 = findViewById(R.id.card5);
-        card5.setEnabled(false);
         card6 = findViewById(R.id.card6);
-        card6.setEnabled(false);
         card7 = findViewById(R.id.card7);
-        card7.setEnabled(false);
         dealer1 = findViewById(R.id.dealer1);
         dealer2 = findViewById(R.id.dealer2);
         dealer3 = findViewById(R.id.dealer3);
-        dealer3.setEnabled(false);
         dealer4 = findViewById(R.id.dealer4);
-        dealer4.setEnabled(false);
         dealer5 = findViewById(R.id.dealer5);
-        dealer5.setEnabled(false);
         dealer6 = findViewById(R.id.dealer6);
-        dealer6.setEnabled(false);
         dealer7 = findViewById(R.id.dealer7);
-        dealer7.setEnabled(false);
+        card3.setVisibility(View.GONE);
+        card4.setVisibility(View.GONE);
+        card5.setVisibility(View.GONE);
+        card6.setVisibility(View.GONE);
+        card7.setVisibility(View.GONE);
+        dealer3.setVisibility(View.GONE);
+        dealer4.setVisibility(View.GONE);
+        dealer5.setVisibility(View.GONE);
+        dealer6.setVisibility(View.GONE);
+        dealer7.setVisibility(View.GONE);
 
         // ON START
         card1.setImageResource(R.drawable.ace_of_diamonds); // defaults at ace of diamonds
