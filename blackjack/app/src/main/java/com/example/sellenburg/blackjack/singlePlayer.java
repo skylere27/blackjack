@@ -91,8 +91,8 @@ public class singlePlayer extends AppCompatActivity {
     int userTurnTotal = 0; //means until someone wins
     int dealerTotal = 0;
     int dealerTurnTotal = 0;
-    int cardsInUserHand = 0;
-    int cardsInDealerHand = 0;
+    int cardsInUserHand;
+    int cardsInDealerHand;
 
     ArrayList<ImageView> P0visuals;
     ArrayList<ImageView> P1visuals;
@@ -240,7 +240,7 @@ public class singlePlayer extends AppCompatActivity {
         }
 
         //this worries me.
-        ImageView newcard = handVisual.get(cardsInHand+1);
+        ImageView newcard = handVisual.get(cardsInHand);
         Drawable drawable = getResources().getDrawable(id,null);
         newcard.setImageDrawable(drawable);
         newcard.setVisibility(View.VISIBLE);
@@ -292,10 +292,11 @@ public class singlePlayer extends AppCompatActivity {
         dealer7.setVisibility(View.GONE);
 
         // ON START - FIX, CODE THIS? on click of a START GAME button?
+        cardsInUserHand = 0;
         card1.setImageResource(dealCard(1)); // defaults at ace of diamonds
         card2.setImageResource(dealCard(1));
-        cardsInUserHand = 2;
 
+        cardsInDealerHand = 0;
         dealer1.setImageResource(dealCard(0));
         dealer2.setImageResource(R.drawable.card_back);
 
