@@ -36,7 +36,13 @@ public class singlePlayer extends AppCompatActivity {
     * dealerTurn
     *   uses the deal
     *   has its own logic for when to hit/stand
-    * assdf
+    *
+    *
+    // make sure the cards have values!
+    // attribute a point value to each card
+    // roll is now dealCard
+    // hit calls deal
+    // compturn that happens when you stay
     * */
 
     //dealCard branch
@@ -59,10 +65,12 @@ public class singlePlayer extends AppCompatActivity {
     ImageView dealer7;
     Button hit;
     Button stand;
+    ArrayList<Integer> deck;
     int userTotal = 0;
     int userTurnTotal = 0;
     int dealerTotal = 0;
     int dealerTurnTotal = 0;
+    int cardsInHand = 0;
 
     ArrayList<ImageView> P0visuals;
     ArrayList<ImageView> P1visuals;
@@ -71,7 +79,7 @@ public class singlePlayer extends AppCompatActivity {
 
     List<ArrayList<ImageView>> handVisuals = Arrays.asList(P0visuals, P1visuals, P2visuals);
 
-    ArrayList<Integer> cardsList =  new ArrayList<Integer>(Arrays.asList(R.drawable.ace_of_clubs, R.drawable.ace_of_diamonds, R.drawable.ace_of_hearts, R.drawable.ace_of_spades,
+    public static final ArrayList<Integer> cardsList =  new ArrayList<Integer>(Arrays.asList(R.drawable.ace_of_clubs, R.drawable.ace_of_diamonds, R.drawable.ace_of_hearts, R.drawable.ace_of_spades,
             R.drawable.eight_of_clubs, R.drawable.eight_of_diamonds, R.drawable.eight_of_hearts, R.drawable.eight_of_spades,
             R.drawable.five_of_clubs, R.drawable.five_of_diamonds, R.drawable.five_of_hearts, R.drawable.five_of_spades,
             R.drawable.four_of_clubs, R.drawable.four_of_diamonds, R.drawable.four_of_hearts, R.drawable.four_of_spades,
@@ -85,18 +93,15 @@ public class singlePlayer extends AppCompatActivity {
             R.drawable.ten_of_clubs, R.drawable.ten_of_diamonds, R.drawable.ten_of_hearts, R.drawable.ten_of_spades,
             R.drawable.two_of_clubs, R.drawable.two_of_diamonds, R.drawable.two_of_hearts, R.drawable.two_of_spades));
 
-    // Skyler's note: use dice code except change the die image to be each card and make sure the cards have values!
-    // attribute a point value to each card
-    // roll is now dealCard
-    // hit calls deal
-    // compturn that happens when you stay
 
     private int dealCard() {
-        return cardsList.remove(0);
+        return deck.remove(0);
+        // show the card in the correct spot in hand
+        // account for if deck has run out
     }
 
     public void hitClicked() {
-
+        
     }
 
     private void standClicked() {
@@ -135,10 +140,12 @@ public class singlePlayer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_player);
-        Collections.shuffle(cardsList);
 
         score = findViewById(R.id.score);
         console = findViewById(R.id.console);
+
+        deck = cardsList;
+        Collections.shuffle(deck); // deck is shuffled
 
         card1 = findViewById(R.id.card1);
         P1visuals.add(0,card1);
@@ -181,14 +188,10 @@ public class singlePlayer extends AppCompatActivity {
         dealer6.setVisibility(View.GONE);
         dealer7.setVisibility(View.GONE);
 
-        // ON START
-        /*
-        card1.setImageResource(R.drawable.ace_of_diamonds); // defaults at ace of diamonds
-        card2.setImageResource(R.drawable.king_of_clubs);
-        */
-        int c1 = dealCard();
-        int c2 = dealCard();
-        P1hand.set(0,);
+        // ON START - FIX, CODE THIS? on click of a START GAME button?
+        card1.setImageResource(dealCard()); // defaults at ace of diamonds
+        card2.setImageResource(dealCard());
+        cardsInHand = 2;
 
         // CLICK HIT
         hit = findViewById(R.id.hit);
