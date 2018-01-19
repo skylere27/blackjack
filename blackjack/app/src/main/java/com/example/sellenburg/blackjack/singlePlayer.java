@@ -3,6 +3,7 @@ package com.example.sellenburg.blackjack;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.ImageView;
@@ -114,13 +115,14 @@ public class singlePlayer extends AppCompatActivity {
     private int dealCard(int p) {
         int card = deck.remove(0);
         int cardValue;
-        for (HashMap.Entry<Integer, ArrayList<Integer>> entry : valueToCards.entrySet())
+        for (HashMap.Entry<Integer, ArrayList<Integer>> cardArray : valueToCards.entrySet())
         {
-            for (int i; i < entry.size(); i++) {
-                if (entry.get(i) == card) {
-                    cardValue = valueToCards;
-                }
-            }
+            Log.i("DEALLOG", cardArray.toString());
+//            for (int i; i < cardArray.size(); i++) {
+//                if (cardArray.get(i) == card) {
+//                    cardValue = valueToCards;
+//                }
+//            }
         }
         // potentially change hashmap to card: value
         if (p == 0) { // dealer turn
@@ -182,34 +184,23 @@ public class singlePlayer extends AppCompatActivity {
         Collections.shuffle(deck); // deck is shuffled
 
         card1 = findViewById(R.id.card1);
-        P1visuals.add(0,card1);
         card2 = findViewById(R.id.card2);
-        P1visuals.add(1,card2);
         card3 = findViewById(R.id.card3);
-        P1visuals.add(2, card3);
         card4 = findViewById(R.id.card4);
-        P1visuals.add(3,card4);
         card5 = findViewById(R.id.card5);
-        P1visuals.add(4,card5);
         card6 = findViewById(R.id.card6);
-        P1visuals.add(5,card6);
         card7 = findViewById(R.id.card7);
-        P1visuals.add(6,card7);
+        P1visuals = new ArrayList<ImageView>(Arrays.asList(card1, card2, card3, card4, card5, card6, card7));
+
 
         dealer1 = findViewById(R.id.dealer1);
-        P0visuals.add(0,dealer1);
         dealer2 = findViewById(R.id.dealer2);
-        P0visuals.add(1,dealer2);
         dealer3 = findViewById(R.id.dealer3);
-        P0visuals.add(2,dealer3);
         dealer4 = findViewById(R.id.dealer4);
-        P0visuals.add(3,dealer4);
         dealer5 = findViewById(R.id.dealer5);
-        P0visuals.add(4,dealer5);
         dealer6 = findViewById(R.id.dealer6);
-        P0visuals.add(5,dealer6);
         dealer7 = findViewById(R.id.dealer7);
-        P0visuals.add(6,dealer7);
+        P0visuals = new ArrayList<ImageView>(Arrays.asList(dealer1, dealer2, dealer3, dealer4, dealer5, dealer6, dealer7));
 
         card3.setVisibility(View.GONE);
         card4.setVisibility(View.GONE);
