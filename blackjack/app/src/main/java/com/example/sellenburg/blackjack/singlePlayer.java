@@ -68,6 +68,7 @@ public class singlePlayer extends AppCompatActivity {
     int userTurnTotal = 0;
     int dealerTotal = 0;
     int dealerTurnTotal = 0;
+    int cardsInHand = 0;
 
     public static final ArrayList<Integer> cardsList =  new ArrayList<Integer>(Arrays.asList(R.drawable.ace_of_clubs, R.drawable.ace_of_diamonds, R.drawable.ace_of_hearts, R.drawable.ace_of_spades,
             R.drawable.eight_of_clubs, R.drawable.eight_of_diamonds, R.drawable.eight_of_hearts, R.drawable.eight_of_spades,
@@ -91,7 +92,7 @@ public class singlePlayer extends AppCompatActivity {
     }
 
     public void hitClicked() {
-
+        
     }
 
     private void standClicked() {
@@ -140,6 +141,7 @@ public class singlePlayer extends AppCompatActivity {
         // ON START - FIX, CODE THIS? on click of a START GAME button?
         card1.setImageResource(dealCard()); // defaults at ace of diamonds
         card2.setImageResource(dealCard());
+        cardsInHand = 2;
 
         // CLICK HIT
         hit = findViewById(R.id.hit);
