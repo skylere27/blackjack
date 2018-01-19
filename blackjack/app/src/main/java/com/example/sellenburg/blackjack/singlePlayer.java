@@ -140,22 +140,42 @@ public class singlePlayer extends AppCompatActivity {
 
     private void dealerTurn() {
 //will deal a card and update the image and score
-        dealCard(0);
+        int recentCard = dealCard(0);
         while(dealerTurnTotal <= 16)
         {
-            dealCard(0);
+           recentCard = dealCard(0);
         }
+        /*if(recentCard == valueToCards.get(11).get(0) && recentCard + dealerTurnTotal ==)
+        //|| recentCard == valueToCards.get(11).get(1) || recentCard == valueToCards.get(11).get(2) || recentCard == valueToCards.get(11).get(3))
+        {
+
+        }*/
         if(dealerTurnTotal == 21)
         {
-            console = findViewById(R.id.console);
-            score = findViewById(R.id.score);
-            console.setText("Computer wins this round!");
+            console.setText("Dealer wins this round!");
             dealerTotal++;
             dealerTurnTotal = 0;
             score.setText("Your Wins: "+ userTotal + " Dealer Wins: "+dealerTotal);
         }
         else if(dealerTurnTotal >= 17)
         {
+
+            //compare with user to see if user or computer has a greater total
+            console.setText("Round over!");
+            if(userTurnTotal > dealerTurnTotal)
+            {
+                userTotal++;
+                userTurnTotal = 0;
+                console.setText("User wins this round!");
+                score.setText("Your Wins: "+userTotal + " Dealer Wins: "+dealerTotal);
+            }
+            else
+            {
+                dealerTotal++;
+                dealerTurnTotal = 0;
+                console.setText("Dealer wins this round!");
+                score.setText("Your Wins: "+userTotal + " Dealer Wins: "+dealerTotal);
+            }
 
         }
     }
