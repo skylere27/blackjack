@@ -118,9 +118,9 @@ public class singlePlayer extends AppCompatActivity {
         for (HashMap.Entry<Integer, ArrayList<Integer>> cardArray : valueToCards.entrySet())
         {
             Log.i("DEALLOG", cardArray.toString());
-//            for (int i; i < cardArray.size(); i++) {
-//                if (cardArray.get(i) == card) {
-//                    cardValue = valueToCards;
+//            for (int i; i < valueToCards.size(); i++) {
+//                if (cardArray.getValue(i) == card) {
+//                    //cardValue = valueToCards;
 //                }
 //            }
         }
