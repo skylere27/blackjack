@@ -1,5 +1,6 @@
 package com.example.sellenburg.blackjack;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Arrays;
+import java.util.List;
 
 public class singlePlayer extends AppCompatActivity {
 
@@ -62,6 +64,13 @@ public class singlePlayer extends AppCompatActivity {
     int dealerTotal = 0;
     int dealerTurnTotal = 0;
 
+    ArrayList<ImageView> P0visuals;
+    ArrayList<ImageView> P1visuals;
+    ArrayList<ImageView> P2visuals;
+    //lists of the views where the drawables are displayed
+
+    List<ArrayList<ImageView>> handVisuals = Arrays.asList(P0visuals, P1visuals, P2visuals);
+
     ArrayList<Integer> cardsList =  new ArrayList<Integer>(Arrays.asList(R.drawable.ace_of_clubs, R.drawable.ace_of_diamonds, R.drawable.ace_of_hearts, R.drawable.ace_of_spades,
             R.drawable.eight_of_clubs, R.drawable.eight_of_diamonds, R.drawable.eight_of_hearts, R.drawable.eight_of_spades,
             R.drawable.five_of_clubs, R.drawable.five_of_diamonds, R.drawable.five_of_hearts, R.drawable.five_of_spades,
@@ -98,6 +107,30 @@ public class singlePlayer extends AppCompatActivity {
 
     }
 
+    /* I don't think this makes sense anymore based on how other
+        things got implemented -Erica
+    public void refreshPlayerHandView(int p){
+        //p=0 indicates dealer, p=1 indicates P1, p=2 indicates P2, etc
+        ArrayList<Drawable> hand = hands.get(p);
+        ArrayList<ImageView> handVisual = handVisuals.get(p);
+
+        ImageView card1 = handVisual.get(0);
+        card1.setImageDrawable(hand.get(0));
+        ImageView card2 = handVisual.get(1);
+        card2.setImageDrawable(hand.get(1));
+        ImageView card3 = handVisual.get(2);
+        card3.setImageDrawable(hand.get(2));
+        ImageView card4 = handVisual.get(3);
+        card4.setImageDrawable(hand.get(3));
+        ImageView card5 = handVisual.get(4);
+        card5.setImageDrawable(hand.get(4));
+        ImageView card6 = handVisual.get(5);
+        card6.setImageDrawable(hand.get(5));
+        ImageView card7 = handVisual.get(6);
+        card7.setImageDrawable(hand.get(6));
+    }
+    */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,20 +139,37 @@ public class singlePlayer extends AppCompatActivity {
 
         score = findViewById(R.id.score);
         console = findViewById(R.id.console);
+
         card1 = findViewById(R.id.card1);
+        P1visuals.add(0,card1);
         card2 = findViewById(R.id.card2);
+        P1visuals.add(1,card2);
         card3 = findViewById(R.id.card3);
+        P1visuals.add(2, card3);
         card4 = findViewById(R.id.card4);
+        P1visuals.add(3,card4);
         card5 = findViewById(R.id.card5);
+        P1visuals.add(4,card5);
         card6 = findViewById(R.id.card6);
+        P1visuals.add(5,card6);
         card7 = findViewById(R.id.card7);
+        P1visuals.add(6,card7);
+
         dealer1 = findViewById(R.id.dealer1);
+        P0visuals.add(0,dealer1);
         dealer2 = findViewById(R.id.dealer2);
+        P0visuals.add(1,dealer2);
         dealer3 = findViewById(R.id.dealer3);
+        P0visuals.add(2,dealer3);
         dealer4 = findViewById(R.id.dealer4);
+        P0visuals.add(3,dealer4);
         dealer5 = findViewById(R.id.dealer5);
+        P0visuals.add(4,dealer5);
         dealer6 = findViewById(R.id.dealer6);
+        P0visuals.add(5,dealer6);
         dealer7 = findViewById(R.id.dealer7);
+        P0visuals.add(6,dealer7);
+
         card3.setVisibility(View.GONE);
         card4.setVisibility(View.GONE);
         card5.setVisibility(View.GONE);
@@ -132,8 +182,13 @@ public class singlePlayer extends AppCompatActivity {
         dealer7.setVisibility(View.GONE);
 
         // ON START
+        /*
         card1.setImageResource(R.drawable.ace_of_diamonds); // defaults at ace of diamonds
         card2.setImageResource(R.drawable.king_of_clubs);
+        */
+        int c1 = dealCard();
+        int c2 = dealCard();
+        P1hand.set(0,);
 
         // CLICK HIT
         hit = findViewById(R.id.hit);
