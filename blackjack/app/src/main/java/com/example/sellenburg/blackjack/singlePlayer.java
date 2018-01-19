@@ -36,7 +36,7 @@ public class singlePlayer extends AppCompatActivity {
     *   has its own logic for when to hit/stand
     *
     *
-    // make sure the cards have values!
+    // make sure the cards have values! HASH MAP
     // attribute a point value to each card
     // roll is now dealCard
     // hit calls deal
@@ -84,11 +84,17 @@ public class singlePlayer extends AppCompatActivity {
             R.drawable.ten_of_clubs, R.drawable.ten_of_diamonds, R.drawable.ten_of_hearts, R.drawable.ten_of_spades,
             R.drawable.two_of_clubs, R.drawable.two_of_diamonds, R.drawable.two_of_hearts, R.drawable.two_of_spades));
 
+    // On deal, updates image and score
+    private int dealCard(int p) {
+        int card = deck.remove(0);
+        if (p == 0) { // dealer turn
+            // updates dealer hand and dealer score
 
-    private int dealCard() {
-        return deck.remove(0);
-        // show the card in the correct spot in hand
-        // account for if deck has run out
+        } else if (p == 1) { // player 1
+            // updates player hand and player score
+
+        }
+        return card;
     }
 
     public void hitClicked() {
