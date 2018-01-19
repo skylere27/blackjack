@@ -70,6 +70,7 @@ public class singlePlayer extends AppCompatActivity {
     ImageView dealer7;
     Button hit;
     Button stand;
+    Button newround;
     ArrayList<Integer> deck;
     HashMap<Integer, ArrayList<Integer>> valueToCards = new  HashMap<Integer, ArrayList<Integer>> () {{
         put(11, new ArrayList<Integer>(Arrays.asList(R.drawable.ace_of_clubs, R.drawable.ace_of_diamonds, R.drawable.ace_of_hearts, R.drawable.ace_of_spades)));
@@ -91,14 +92,14 @@ public class singlePlayer extends AppCompatActivity {
     int userTurnTotal = 0; //means until someone wins
     int dealerTotal = 0;
     int dealerTurnTotal = 0;
-    int cardsInHand = 0;
+    int cardsInUserHand;
+    int cardsInDealerHand;
 
     ArrayList<ImageView> P0visuals;
     ArrayList<ImageView> P1visuals;
     ArrayList<ImageView> P2visuals;
+    ArrayList<ArrayList<ImageView>> handVisuals;
     //lists of the views where the drawables are displayed
-
-    List<ArrayList<ImageView>> handVisuals = Arrays.asList(P0visuals, P1visuals, P2visuals);
 
     public static final ArrayList<Integer> cardsList =  new ArrayList<Integer>(Arrays.asList(R.drawable.ace_of_clubs, R.drawable.ace_of_diamonds, R.drawable.ace_of_hearts, R.drawable.ace_of_spades,
             R.drawable.eight_of_clubs, R.drawable.eight_of_diamonds, R.drawable.eight_of_hearts, R.drawable.eight_of_spades,
@@ -130,15 +131,22 @@ public class singlePlayer extends AppCompatActivity {
         // potentially change hashmap to card: value
         if (p == 0) { // dealer turn
             // updates dealer hand and dealer score
+
             dealerTurnTotal += cardValue;
             Log.i("DEALERTOTAL", ""+dealerTurnTotal);
             if (dealerTurnTotal == 21) {
                 console.setText("BLACKJACK! Computer got blackjack!");
+                newround.setEnabled(true);
             } else if (dealerTurnTotal > 21) {
                 console.setText("BUST! Computer busted.");
+                newround.setEnabled(true);
                 dealerTurnTotal = 0;
                 // not sure what happens here
             }
+            //assuming hand size counter has NOT been updated
+            updateHandView(p,card);
+            cardsInDealerHand++;
+
         } else if (p == 1) { // player 1
             // updates player hand and player score
             userTurnTotal += cardValue;
@@ -151,21 +159,28 @@ public class singlePlayer extends AppCompatActivity {
                 console.setText("BUST! You busted with " + userTurnTotal + ".");
                 dealerTotal += 1;
                 userTurnTotal = 0;
+                hit.setEnabled(false);
+                stand.setEnabled(false);
                 // round ends!! might call for reconstruction of hit method...like putting all of this into hit instead of deal
             }
+            //assuming hand size counter has NOT been updated
+            updateHandView(p,card);
+            cardsInUserHand++;
         }
         return card;
     }
 
     private void dealerTurn() {
 //will deal a card and update the image and score
+        hit.setEnabled(false);
+        stand.setEnabled(false);
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 int recentCard = dealCard(0);
-                console.setText("The dealer's hand total: " + dealerTurnTotal);
-                if (dealerTurnTotal <= 16) {
+                console.setText("Your hand total: " + userTurnTotal + "\nThe dealer's hand total: " + dealerTurnTotal);
+                if (dealerTurnTotal <= 16 && dealerTurnTotal > 0) { //Fix the problem when dealer busts!!
                     dealerTurn();
                 } else {
                     endDealerTurn();
@@ -181,58 +196,55 @@ public class singlePlayer extends AppCompatActivity {
 
     }
 
+
     private void endDealerTurn() {
-        if(dealerTurnTotal == 21)
+        //compare with user to see if user or computer has a greater total
+        console.setText("Round over!");
+        if(userTurnTotal > dealerTurnTotal)
         {
-            console.setText("Dealer wins this round!");
-            dealerTotal++;
+            userTotal++;
+            console.setText("User wins this round with " + userTurnTotal + " points! \nDealer score was " + dealerTurnTotal);
+            userTurnTotal = 0;
             dealerTurnTotal = 0;
-            score.setText("Your Wins: "+ userTotal + " Dealer Wins: " + dealerTotal);
+            score.setText("Your Wins: "+ userTotal + " Dealer Wins: "+dealerTotal);
         }
-        else if(dealerTurnTotal >= 17)
+        else
         {
-            //compare with user to see if user or computer has a greater total
-            console.setText("Round over!");
-            if(userTurnTotal > dealerTurnTotal)
-            {
-                userTotal++;
-                userTurnTotal = 0;
-                console.setText("User wins this round!");
-                score.setText("Your Wins: "+userTotal + " Dealer Wins: "+dealerTotal);
-            }
-            else
-            {
-                dealerTotal++;
-                console.setText("Dealer wins this round with " + dealerTurnTotal + "!! \nYour score was " + userTurnTotal);
-                dealerTurnTotal = 0;
-                score.setText("Your Wins: "+userTotal + " Dealer Wins: "+dealerTotal);
-            }
+            dealerTotal++;
+            console.setText("Dealer wins this round with " + dealerTurnTotal + " points! \nYour score was " + userTurnTotal);
+            dealerTurnTotal = 0;
+            userTurnTotal = 0;
+            score.setText("Your Wins: "+userTotal + " Dealer Wins: "+dealerTotal);
         }
     }
-
-    /* I don't think this makes sense anymore based on how other
-        things got implemented -Erica
-    public void refreshPlayerHandView(int p){
+    
+    public void updateHandView(int p,int id){
         //p=0 indicates dealer, p=1 indicates P1, p=2 indicates P2, etc
-        ArrayList<Drawable> hand = hands.get(p);
+        //id indicates new card
+        Log.d("myDebugTag", "p: " + String.valueOf(p) +
+                "; id: " + String.valueOf(id) +
+                "; handVisuals: " + String.valueOf(handVisuals) +
+                "; P0Visuals: " + String.valueOf(P0visuals) +
+                "; P1Visuals: " + String.valueOf(P1visuals) +
+                "; handVisuals.get(p): " + String.valueOf(handVisuals.get(p)));
         ArrayList<ImageView> handVisual = handVisuals.get(p);
 
-        ImageView card1 = handVisual.get(0);
-        card1.setImageDrawable(hand.get(0));
-        ImageView card2 = handVisual.get(1);
-        card2.setImageDrawable(hand.get(1));
-        ImageView card3 = handVisual.get(2);
-        card3.setImageDrawable(hand.get(2));
-        ImageView card4 = handVisual.get(3);
-        card4.setImageDrawable(hand.get(3));
-        ImageView card5 = handVisual.get(4);
-        card5.setImageDrawable(hand.get(4));
-        ImageView card6 = handVisual.get(5);
-        card6.setImageDrawable(hand.get(5));
-        ImageView card7 = handVisual.get(6);
-        card7.setImageDrawable(hand.get(6));
+        int cardsInHand = 0;
+        if (p == 0) { // dealer turn
+            cardsInHand = cardsInDealerHand;
+
+        } else if (p == 1) { // player 1
+            cardsInHand = cardsInUserHand;
+        }
+
+        //this worries me.
+        ImageView newcard = handVisual.get(cardsInHand);
+        Drawable drawable = getResources().getDrawable(id,null);
+        newcard.setImageDrawable(drawable);
+        newcard.setVisibility(View.VISIBLE);
+
     }
-    */
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -241,6 +253,8 @@ public class singlePlayer extends AppCompatActivity {
 
         score = findViewById(R.id.score);
         console = findViewById(R.id.console);
+        newround = findViewById(R.id.newround);
+        newround.setEnabled(false);
 
         deck = cardsList;
         Collections.shuffle(deck); // deck is shuffled
@@ -264,6 +278,8 @@ public class singlePlayer extends AppCompatActivity {
         dealer7 = findViewById(R.id.dealer7);
         P0visuals = new ArrayList<ImageView>(Arrays.asList(dealer1, dealer2, dealer3, dealer4, dealer5, dealer6, dealer7));
 
+        handVisuals = new ArrayList<ArrayList<ImageView>>(Arrays.asList(P0visuals, P1visuals, P2visuals));
+
         card3.setVisibility(View.GONE);
         card4.setVisibility(View.GONE);
         card5.setVisibility(View.GONE);
@@ -276,12 +292,16 @@ public class singlePlayer extends AppCompatActivity {
         dealer7.setVisibility(View.GONE);
 
         // ON START - FIX, CODE THIS? on click of a START GAME button?
+        cardsInUserHand = 0;
         card1.setImageResource(dealCard(1)); // defaults at ace of diamonds
         card2.setImageResource(dealCard(1));
+
+        cardsInDealerHand = 0;
         dealer1.setImageResource(dealCard(0));
         dealer2.setImageResource(R.drawable.card_back);
+
         Log.i("ONSTART", "DEALT TWO CARDS EACH. PlayerTotal: " + userTurnTotal + " DealerTotal: " + dealerTurnTotal);
-        cardsInHand = 2;
+
         console.setText("Your hand total: " + userTurnTotal);
 
         // CLICK HIT
@@ -300,5 +320,14 @@ public class singlePlayer extends AppCompatActivity {
                 console.setText("Your hand total: " + userTurnTotal + "\nDealer hand total: " + dealerTurnTotal);
             };
         });
+
+        //CLICK NEWROUND
+        newround.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                userTurnTotal = 0;
+                dealerTurnTotal = 0;
+            };
+        });
+
     }
 }
