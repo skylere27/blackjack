@@ -1,6 +1,7 @@
 package com.example.sellenburg.blackjack;
 
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -140,22 +141,32 @@ public class singlePlayer extends AppCompatActivity {
 
     private void dealerTurn() {
 //will deal a card and update the image and score
-        int recentCard = dealCard(0);
-        while(dealerTurnTotal <= 16)
-        {
-           recentCard = dealCard(0);
-        }
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int recentCard = dealCard(0);
+                console.setText("The dealer's hand total: " + dealerTurnTotal);
+                if (dealerTurnTotal <= 16) {
+                    dealerTurn();
+                }
+            }
+        }, 1000);
         /*if(recentCard == valueToCards.get(11).get(0) && recentCard + dealerTurnTotal ==)
         //|| recentCard == valueToCards.get(11).get(1) || recentCard == valueToCards.get(11).get(2) || recentCard == valueToCards.get(11).get(3))
         {
 
         }*/
+
+    }
+
+    private void endDealerTurn() {
         if(dealerTurnTotal == 21)
         {
             console.setText("Dealer wins this round!");
             dealerTotal++;
             dealerTurnTotal = 0;
-            score.setText("Your Wins: "+ userTotal + " Dealer Wins: "+dealerTotal);
+            score.setText("Your Wins: "+ userTotal + " Dealer Wins: " + dealerTotal);
         }
         else if(dealerTurnTotal >= 17)
         {
