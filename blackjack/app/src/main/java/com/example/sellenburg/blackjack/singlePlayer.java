@@ -154,6 +154,7 @@ public class singlePlayer extends AppCompatActivity {
             console.setText("Your hand total: " + userTurnTotal);
             if (userTurnTotal == 21) {
                 console.setText("BLACKJACK! You got blackjack!");
+                dealerTurn(true);
                 hit.setEnabled(false);
                 stand.setEnabled(false);
                 newround.setEnabled(true);
@@ -174,7 +175,7 @@ public class singlePlayer extends AppCompatActivity {
         return card;
     }
 
-    private void dealerTurn() {
+    private void dealerTurn(final boolean userBlackjack) {
 //will deal a card and update the image and score
         hit.setEnabled(false);
         stand.setEnabled(false);
@@ -185,12 +186,14 @@ public class singlePlayer extends AppCompatActivity {
                 int recentCard = dealCard(0);
                 console.setText("Your hand total: " + userTurnTotal + "\nThe dealer's hand total: " + dealerTurnTotal);
                 if (dealerTurnTotal <= 16 && dealerTurnTotal > 0) { //Fix the problem when dealer busts!!
-                    dealerTurn();
+                    dealerTurn(false);
+                } else if (userBlackjack == true && dealerTurnTotal == 21) {
+                    endDealerTurn(true); // dealer and user both got blackjack, draw
                 } else {
-                    endDealerTurn();
+                    endDealerTurn(false);
                 }
             }
-        }, 4000);
+        }, 3500);
 
         /*if(recentCard == valueToCards.get(11).get(0) && recentCard + dealerTurnTotal ==)
         //|| recentCard == valueToCards.get(11).get(1) || recentCard == valueToCards.get(11).get(2) || recentCard == valueToCards.get(11).get(3))
@@ -201,17 +204,19 @@ public class singlePlayer extends AppCompatActivity {
     }
 
 
-    private void endDealerTurn() {
+    private void endDealerTurn(boolean dealerBlackjack) {
         //compare with user to see if user or computer has a greater total
         console.setText("Round over!");
         if(userTurnTotal > dealerTurnTotal)
-        {
+        { // user wins
             userTotal++;
             console.setText("User wins this round with " + userTurnTotal + " points! \nDealer score was " + dealerTurnTotal);
             score.setText("Your Wins: "+ userTotal + " Dealer Wins: "+dealerTotal);
-            hit.setEnabled(false);
-            stand.setEnabled(false);
-            newround.setEnabled(true);
+        } else if (dealerBlackjack == true) { // dealer got blackjack and user did too
+            console.setText("DRAW! Dealer also had blackjack!");
+            userTurnTotal = 0;
+            dealerTurnTotal = 0;
+            score.setText("Your Wins: "+ userTotal + " Dealer Wins: "+dealerTotal);
         }
         else
         {
@@ -322,7 +327,7 @@ public class singlePlayer extends AppCompatActivity {
         stand = findViewById(R.id.stand);
         stand.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                dealerTurn();
+                dealerTurn(false);
                 console.setText("Your hand total: " + userTurnTotal + "\nDealer hand total: " + dealerTurnTotal);
             };
         });
@@ -334,6 +339,19 @@ public class singlePlayer extends AppCompatActivity {
                 Collections.shuffle(deck);
                 userTurnTotal = 0;
                 dealerTurnTotal = 0;
+                cardsInDealerHand = 0;
+                cardsInUserHand = 0;
+                card3.setVisibility(View.GONE);
+                card4.setVisibility(View.GONE);
+                card5.setVisibility(View.GONE);
+                card6.setVisibility(View.GONE);
+                card7.setVisibility(View.GONE);
+                dealer3.setVisibility(View.GONE);
+                dealer4.setVisibility(View.GONE);
+                dealer5.setVisibility(View.GONE);
+                dealer6.setVisibility(View.GONE);
+                dealer7.setVisibility(View.GONE);
+
                 card1.setImageResource(dealCard(1)); // defaults at ace of diamonds
                 card2.setImageResource(dealCard(1));
                 dealer1.setImageResource(dealCard(0));
