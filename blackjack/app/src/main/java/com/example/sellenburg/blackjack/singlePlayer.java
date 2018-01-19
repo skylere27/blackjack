@@ -84,7 +84,7 @@ public class singlePlayer extends AppCompatActivity {
     }};
 
     int userTotal = 0;
-    int userTurnTotal = 0;
+    int userTurnTotal = 0; //means until someone wins
     int dealerTotal = 0;
     int dealerTurnTotal = 0;
     int cardsInHand = 0;
@@ -124,8 +124,38 @@ public class singlePlayer extends AppCompatActivity {
     }
 
 
-    private void dealerTurn() {
 
+
+    public void hitClicked() {
+        //cardImages.get(cardsInHand).setImageResource(dealCard())
+        //
+    }
+
+    private void standClicked() {
+
+    }
+//ie computer
+
+    private void dealerTurn() {
+//will deal a card and update the image and score
+        dealCard(0);
+        while(dealerTurnTotal <= 16)
+        {
+            dealCard(0);
+        }
+        if(dealerTurnTotal == 21)
+        {
+            console = findViewById(R.id.console);
+            score = findViewById(R.id.score);
+            console.setText("Computer wins this round!");
+            dealerTotal++;
+            dealerTurnTotal = 0;
+            score.setText("Your Wins: "+userTotal + " Dealer Wins: "+dealerTotal);
+        }
+        else if(dealerTurnTotal >= 17)
+        {
+            standClicked();
+        }
     }
 
     /* I don't think this makes sense anymore based on how other
