@@ -136,16 +136,6 @@ public class singlePlayer extends AppCompatActivity {
     }
 
 
-
-
-    public void hitClicked() {
-        //cardImages.get(cardsInHand).setImageResource(dealCard())
-        //
-    }
-
-    private void standClicked() {
-
-    }
 //ie computer
 
     private void dealerTurn() {
@@ -162,11 +152,11 @@ public class singlePlayer extends AppCompatActivity {
             console.setText("Computer wins this round!");
             dealerTotal++;
             dealerTurnTotal = 0;
-            score.setText("Your Wins: "+userTotal + " Dealer Wins: "+dealerTotal);
+            score.setText("Your Wins: "+ userTotal + " Dealer Wins: "+dealerTotal);
         }
         else if(dealerTurnTotal >= 17)
         {
-            standClicked();
+
         }
     }
 
