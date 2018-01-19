@@ -151,6 +151,8 @@ public class singlePlayer extends AppCompatActivity {
                 console.setText("BUST! You busted with " + userTurnTotal + ".");
                 dealerTotal += 1;
                 userTurnTotal = 0;
+                hit.setEnabled(false);
+                stand.setEnabled(false);
                 // round ends!! might call for reconstruction of hit method...like putting all of this into hit instead of deal
             }
         }
@@ -159,13 +161,15 @@ public class singlePlayer extends AppCompatActivity {
 
     private void dealerTurn() {
 //will deal a card and update the image and score
+        hit.setEnabled(false);
+        stand.setEnabled(false);
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 int recentCard = dealCard(0);
-                console.setText("The dealer's hand total: " + dealerTurnTotal);
-                if (dealerTurnTotal <= 16) {
+                console.setText("Your hand total: " + userTurnTotal + "\nThe dealer's hand total: " + dealerTurnTotal);
+                if (dealerTurnTotal <= 16 && dealerTurnTotal > 0) { //Fix the problem when dealer busts!!
                     dealerTurn();
                 } else {
                     endDealerTurn();
@@ -182,33 +186,26 @@ public class singlePlayer extends AppCompatActivity {
     }
 
     private void endDealerTurn() {
-        if(dealerTurnTotal == 21)
+        //compare with user to see if user or computer has a greater total
+        console.setText("Round over!");
+        if(userTurnTotal > dealerTurnTotal)
         {
-            console.setText("Dealer wins this round!");
-            dealerTotal++;
+            userTotal++;
+            console.setText("User wins this round with " + userTurnTotal + " points! \nDealer score was " + dealerTurnTotal);
+            userTurnTotal = 0;
             dealerTurnTotal = 0;
-            score.setText("Your Wins: "+ userTotal + " Dealer Wins: " + dealerTotal);
+            score.setText("Your Wins: "+ userTotal + " Dealer Wins: "+dealerTotal);
         }
-        else if(dealerTurnTotal >= 17)
+        else
         {
-            //compare with user to see if user or computer has a greater total
-            console.setText("Round over!");
-            if(userTurnTotal > dealerTurnTotal)
-            {
-                userTotal++;
-                userTurnTotal = 0;
-                console.setText("User wins this round!");
-                score.setText("Your Wins: "+userTotal + " Dealer Wins: "+dealerTotal);
-            }
-            else
-            {
-                dealerTotal++;
-                console.setText("Dealer wins this round with " + dealerTurnTotal + "!! \nYour score was " + userTurnTotal);
-                dealerTurnTotal = 0;
-                score.setText("Your Wins: "+userTotal + " Dealer Wins: "+dealerTotal);
-            }
+            dealerTotal++;
+            console.setText("Dealer wins this round with " + dealerTurnTotal + " points! \nYour score was " + userTurnTotal);
+            dealerTurnTotal = 0;
+            userTurnTotal = 0;
+            score.setText("Your Wins: "+userTotal + " Dealer Wins: "+dealerTotal);
         }
     }
+
 
     /* I don't think this makes sense anymore based on how other
         things got implemented -Erica
