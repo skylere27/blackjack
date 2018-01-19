@@ -171,7 +171,7 @@ public class singlePlayer extends AppCompatActivity {
                     endDealerTurn();
                 }
             }
-        }, 1000);
+        }, 4000);
 
         /*if(recentCard == valueToCards.get(11).get(0) && recentCard + dealerTurnTotal ==)
         //|| recentCard == valueToCards.get(11).get(1) || recentCard == valueToCards.get(11).get(2) || recentCard == valueToCards.get(11).get(3))
@@ -203,8 +203,8 @@ public class singlePlayer extends AppCompatActivity {
             else
             {
                 dealerTotal++;
+                console.setText("Dealer wins this round with " + dealerTurnTotal + "!! \nYour score was " + userTurnTotal);
                 dealerTurnTotal = 0;
-                console.setText("Dealer wins this round!");
                 score.setText("Your Wins: "+userTotal + " Dealer Wins: "+dealerTotal);
             }
         }
@@ -297,7 +297,7 @@ public class singlePlayer extends AppCompatActivity {
         stand.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dealerTurn();
-                console.setText("Your hand total: " + userTurnTotal + "Dealer hand total: " + dealerTurnTotal);
+                console.setText("Your hand total: " + userTurnTotal + "\nDealer hand total: " + dealerTurnTotal);
             };
         });
     }
