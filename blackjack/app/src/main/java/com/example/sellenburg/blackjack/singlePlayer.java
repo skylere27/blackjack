@@ -10,6 +10,7 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class singlePlayer extends AppCompatActivity {
@@ -66,6 +67,22 @@ public class singlePlayer extends AppCompatActivity {
     Button hit;
     Button stand;
     ArrayList<Integer> deck;
+    HashMap<Integer, ArrayList<Integer>> valueToCards = new  HashMap<Integer, ArrayList<Integer>> () {{
+        put(11, new ArrayList<Integer>(Arrays.asList(R.drawable.ace_of_clubs, R.drawable.ace_of_diamonds, R.drawable.ace_of_hearts, R.drawable.ace_of_spades)));
+        put(2, new ArrayList<Integer>(Arrays.asList(R.drawable.two_of_clubs, R.drawable.two_of_diamonds, R.drawable.two_of_hearts, R.drawable.two_of_spades)));
+        put(3, new ArrayList<Integer>(Arrays.asList(R.drawable.three_of_clubs, R.drawable.three_of_diamonds, R.drawable.three_of_hearts, R.drawable.three_of_spades)));
+        put(4, new ArrayList<Integer>(Arrays.asList(R.drawable.four_of_clubs, R.drawable.four_of_diamonds, R.drawable.four_of_hearts, R.drawable.four_of_spades)));
+        put(5, new ArrayList<Integer>(Arrays.asList(R.drawable.five_of_clubs, R.drawable.five_of_diamonds, R.drawable.five_of_hearts, R.drawable.five_of_spades)));
+        put(6, new ArrayList<Integer>(Arrays.asList(R.drawable.six_of_clubs, R.drawable.six_of_diamonds, R.drawable.six_of_hearts, R.drawable.six_of_spades)));
+        put(7, new ArrayList<Integer>(Arrays.asList(R.drawable.seven_of_clubs, R.drawable.seven_of_diamonds, R.drawable.seven_of_hearts, R.drawable.seven_of_spades)));
+        put(8, new ArrayList<Integer>(Arrays.asList(R.drawable.eight_of_clubs, R.drawable.eight_of_diamonds, R.drawable.eight_of_hearts, R.drawable.eight_of_spades)));
+        put(9, new ArrayList<Integer>(Arrays.asList(R.drawable.nine_of_clubs, R.drawable.nine_of_diamonds, R.drawable.nine_of_hearts, R.drawable.nine_of_spades)));
+        put(10, new ArrayList<Integer>(Arrays.asList(R.drawable.ten_of_clubs, R.drawable.ten_of_diamonds, R.drawable.ten_of_hearts, R.drawable.ten_of_spades,
+                R.drawable.jack_of_clubs, R.drawable.jack_of_diamonds, R.drawable.jack_of_hearts, R.drawable.jack_of_spades,
+                R.drawable.queen_of_clubs, R.drawable.queen_of_diamonds, R.drawable.queen_of_hearts, R.drawable.queen_of_spades,
+                R.drawable.king_of_clubs, R.drawable.king_of_diamonds, R.drawable.king_of_hearts, R.drawable.king_of_spades)));
+    }};
+
     int userTotal = 0;
     int userTurnTotal = 0;
     int dealerTotal = 0;
@@ -117,7 +134,8 @@ public class singlePlayer extends AppCompatActivity {
     }
 
     public void hitClicked() {
-        
+        //cardImages.get(cardsInHand).setImageResource(dealCard())
+        //
     }
 
     private void standClicked() {
