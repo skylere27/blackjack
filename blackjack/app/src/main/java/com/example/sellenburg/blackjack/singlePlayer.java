@@ -339,7 +339,6 @@ public class singlePlayer extends AppCompatActivity {
                 dealer1.setImageResource(dealCard(0));
                 dealer2.setImageResource(R.drawable.card_back);
                 Log.i("ONSTART", "DEALT TWO CARDS EACH. PlayerTotal: " + userTurnTotal + " DealerTotal: " + dealerTurnTotal);
-                cardsInHand = 2;
                 console.setText("Your hand total: " + userTurnTotal);
                 hit.setEnabled(true);
                 stand.setEnabled(true);
