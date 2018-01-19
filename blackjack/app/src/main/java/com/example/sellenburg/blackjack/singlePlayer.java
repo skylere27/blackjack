@@ -123,14 +123,6 @@ public class singlePlayer extends AppCompatActivity {
         return card;
     }
 
-    public void hitClicked() {
-        //cardImages.get(cardsInHand).setImageResource(dealCard())
-        //
-    }
-
-    private void standClicked() {
-
-    }
 
     private void dealerTurn() {
 
@@ -213,15 +205,19 @@ public class singlePlayer extends AppCompatActivity {
         dealer7.setVisibility(View.GONE);
 
         // ON START - FIX, CODE THIS? on click of a START GAME button?
-        card1.setImageResource(dealCard()); // defaults at ace of diamonds
-        card2.setImageResource(dealCard());
+        card1.setImageResource(dealCard(1)); // defaults at ace of diamonds
+        card2.setImageResource(dealCard(1));
+        dealer1.setImageResource(dealCard(0));
+        dealer2.setImageResource(R.drawable.card_back);
         cardsInHand = 2;
+        console.setText("Your hand total: " + userTurnTotal);
 
         // CLICK HIT
         hit = findViewById(R.id.hit);
         hit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                hitClicked();
+                dealCard(1);
+                console.setText("Your hand total: " + userTurnTotal);
             };
         });
 
@@ -229,8 +225,8 @@ public class singlePlayer extends AppCompatActivity {
         stand = findViewById(R.id.stand);
         stand.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                standClicked();
                 dealerTurn();
+                console.setText("Your hand total: " + userTurnTotal + "Dealer hand total: " + dealerTurnTotal);
             };
         });
     }
