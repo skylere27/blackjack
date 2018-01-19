@@ -131,16 +131,6 @@ public class singlePlayer extends AppCompatActivity {
         if (p == 0) { // dealer turn
             // updates dealer hand and dealer score
 
-            //assuming hand size counter has NOT been updated
-            updateHandView(p,card);
-            cardsInDealerHand++;
-        } else if (p == 1) { // player 1
-            // updates player hand and player score
-
-            //assuming hand size counter has NOT been updated
-            updateHandView(p,card);
-            cardsInUserHand++;
-
             dealerTurnTotal += cardValue;
             Log.i("DEALERTOTAL", ""+dealerTurnTotal);
             if (dealerTurnTotal == 21) {
@@ -150,6 +140,10 @@ public class singlePlayer extends AppCompatActivity {
                 dealerTurnTotal = 0;
                 // not sure what happens here
             }
+            //assuming hand size counter has NOT been updated
+            updateHandView(p,card);
+            cardsInDealerHand++;
+
         } else if (p == 1) { // player 1
             // updates player hand and player score
             userTurnTotal += cardValue;
@@ -164,6 +158,9 @@ public class singlePlayer extends AppCompatActivity {
                 userTurnTotal = 0;
                 // round ends!! might call for reconstruction of hit method...like putting all of this into hit instead of deal
             }
+            //assuming hand size counter has NOT been updated
+            updateHandView(p,card);
+            cardsInUserHand++;
         }
         return card;
     }
@@ -242,9 +239,11 @@ public class singlePlayer extends AppCompatActivity {
             cardsInHand = cardsInUserHand;
         }
 
-        ImageView card = handVisual.get(cardsInHand+1);
+        //this worries me.
+        ImageView newcard = handVisual.get(cardsInHand+1);
         Drawable drawable = getResources().getDrawable(id,null);
-        card.setImageDrawable(drawable);
+        newcard.setImageDrawable(drawable);
+        newcard.setVisibility(View.VISIBLE);
 
     }
 
