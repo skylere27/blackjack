@@ -70,7 +70,8 @@ public class singlePlayer extends AppCompatActivity {
     int userTurnTotal = 0;
     int dealerTotal = 0;
     int dealerTurnTotal = 0;
-    int cardsInHand = 0;
+    int cardsInUserHand = 0;
+    int cardsInDealerHand = 0;
 
     ArrayList<ImageView> P0visuals;
     ArrayList<ImageView> P1visuals;
@@ -99,9 +100,15 @@ public class singlePlayer extends AppCompatActivity {
         if (p == 0) { // dealer turn
             // updates dealer hand and dealer score
 
+            //assuming hand size counter has NOT been updated
+            updateHandView(p,card);
+            cardsInDealerHand++;
         } else if (p == 1) { // player 1
             // updates player hand and player score
 
+            //assuming hand size counter has NOT been updated
+            updateHandView(p,card);
+            cardsInUserHand++;
         }
         return card;
     }
@@ -118,29 +125,26 @@ public class singlePlayer extends AppCompatActivity {
 
     }
 
-    /* I don't think this makes sense anymore based on how other
-        things got implemented -Erica
-    public void refreshPlayerHandView(int p){
+
+    public void updateHandView(int p,int id){
         //p=0 indicates dealer, p=1 indicates P1, p=2 indicates P2, etc
-        ArrayList<Drawable> hand = hands.get(p);
+        //id indicates new card
         ArrayList<ImageView> handVisual = handVisuals.get(p);
 
-        ImageView card1 = handVisual.get(0);
-        card1.setImageDrawable(hand.get(0));
-        ImageView card2 = handVisual.get(1);
-        card2.setImageDrawable(hand.get(1));
-        ImageView card3 = handVisual.get(2);
-        card3.setImageDrawable(hand.get(2));
-        ImageView card4 = handVisual.get(3);
-        card4.setImageDrawable(hand.get(3));
-        ImageView card5 = handVisual.get(4);
-        card5.setImageDrawable(hand.get(4));
-        ImageView card6 = handVisual.get(5);
-        card6.setImageDrawable(hand.get(5));
-        ImageView card7 = handVisual.get(6);
-        card7.setImageDrawable(hand.get(6));
+        int cardsInHand = 0;
+        if (p == 0) { // dealer turn
+            cardsInHand = cardsInDealerHand;
+
+        } else if (p == 1) { // player 1
+            cardsInHand = cardsInUserHand;
+        }
+
+        ImageView card = handVisual.get(cardsInHand+1);
+        Drawable drawable = getResources().getDrawable(id,null);
+        card.setImageDrawable(drawable);
+
     }
-    */
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,9 +199,9 @@ public class singlePlayer extends AppCompatActivity {
         dealer7.setVisibility(View.GONE);
 
         // ON START - FIX, CODE THIS? on click of a START GAME button?
-        card1.setImageResource(dealCard()); // defaults at ace of diamonds
-        card2.setImageResource(dealCard());
-        cardsInHand = 2;
+        card1.setImageResource(dealCard(1)); // defaults at ace of diamonds
+        card2.setImageResource(dealCard(1));
+        cardsInUserHand = 2;
 
         // CLICK HIT
         hit = findViewById(R.id.hit);
