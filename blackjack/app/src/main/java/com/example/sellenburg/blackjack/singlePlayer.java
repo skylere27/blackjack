@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.Button;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Arrays;
@@ -115,29 +117,45 @@ public class singlePlayer extends AppCompatActivity {
     // On deal, updates image and score
     private int dealCard(int p) {
         int card = deck.remove(0);
-        int cardValue;
-        for (HashMap.Entry<Integer, ArrayList<Integer>> cardArray : valueToCards.entrySet())
+        int cardValue = 0;
+        for (HashMap.Entry<Integer, ArrayList<Integer>> entry : valueToCards.entrySet())
         {
-            Log.i("DEALLOG", cardArray.toString());
-//            for (int i; i < valueToCards.size(); i++) {
-//                if (cardArray.getValue(i) == card) {
-//                    //cardValue = valueToCards;
-//                }
-//            }
+            ArrayList<Integer> cardArray = entry.getValue();
+            for (int i = 0; i < cardArray.size(); i++) {
+                if (cardArray.get(i) == card) {
+                    cardValue = entry.getKey();
+                }
+            }
         }
         // potentially change hashmap to card: value
         if (p == 0) { // dealer turn
             // updates dealer hand and dealer score
-
+            dealerTurnTotal += cardValue;
+            Log.i("DEALERTOTAL", ""+dealerTurnTotal);
+            if (dealerTurnTotal == 21) {
+                console.setText("BLACKJACK! Computer got blackjack!");
+            } else if (dealerTurnTotal > 21) {
+                console.setText("BUST! Computer busted.");
+                dealerTurnTotal = 0;
+                // not sure what happens here
+            }
         } else if (p == 1) { // player 1
             // updates player hand and player score
-
+            userTurnTotal += cardValue;
+            Log.i("PLAYERTOTAL", ""+userTurnTotal);
+            console.setText("Your hand total: " + userTurnTotal);
+            if (userTurnTotal == 21) {
+                console.setText("BLACKJACK! You got blackjack!");
+                // will reveal dealer's card and determine win
+            } else if (userTurnTotal > 21) {
+                console.setText("BUST! You busted with " + userTurnTotal + ".");
+                dealerTotal += 1;
+                userTurnTotal = 0;
+                // round ends!! might call for reconstruction of hit method...like putting all of this into hit instead of deal
+            }
         }
         return card;
     }
-
-
-//ie computer
 
     private void dealerTurn() {
 //will deal a card and update the image and score
@@ -149,9 +167,12 @@ public class singlePlayer extends AppCompatActivity {
                 console.setText("The dealer's hand total: " + dealerTurnTotal);
                 if (dealerTurnTotal <= 16) {
                     dealerTurn();
+                } else {
+                    endDealerTurn();
                 }
             }
         }, 1000);
+
         /*if(recentCard == valueToCards.get(11).get(0) && recentCard + dealerTurnTotal ==)
         //|| recentCard == valueToCards.get(11).get(1) || recentCard == valueToCards.get(11).get(2) || recentCard == valueToCards.get(11).get(3))
         {
@@ -170,7 +191,6 @@ public class singlePlayer extends AppCompatActivity {
         }
         else if(dealerTurnTotal >= 17)
         {
-
             //compare with user to see if user or computer has a greater total
             console.setText("Round over!");
             if(userTurnTotal > dealerTurnTotal)
@@ -187,7 +207,6 @@ public class singlePlayer extends AppCompatActivity {
                 console.setText("Dealer wins this round!");
                 score.setText("Your Wins: "+userTotal + " Dealer Wins: "+dealerTotal);
             }
-
         }
     }
 
@@ -261,6 +280,7 @@ public class singlePlayer extends AppCompatActivity {
         card2.setImageResource(dealCard(1));
         dealer1.setImageResource(dealCard(0));
         dealer2.setImageResource(R.drawable.card_back);
+        Log.i("ONSTART", "DEALT TWO CARDS EACH. PlayerTotal: " + userTurnTotal + " DealerTotal: " + dealerTurnTotal);
         cardsInHand = 2;
         console.setText("Your hand total: " + userTurnTotal);
 
@@ -269,7 +289,6 @@ public class singlePlayer extends AppCompatActivity {
         hit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dealCard(1);
-                console.setText("Your hand total: " + userTurnTotal);
             };
         });
 
