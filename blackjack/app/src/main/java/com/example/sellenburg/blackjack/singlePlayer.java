@@ -154,7 +154,7 @@ public class singlePlayer extends AppCompatActivity {
             console.setText("Your hand total: " + userTurnTotal);
             if (userTurnTotal == 21) {
                 console.setText("BLACKJACK! You got blackjack!");
-                // will reveal dealer's card and determine win
+                dealerTurn(true);
             } else if (userTurnTotal > 21) {
                 console.setText("BUST! You busted with " + userTurnTotal + ".");
                 dealerTotal += 1;
@@ -170,7 +170,7 @@ public class singlePlayer extends AppCompatActivity {
         return card;
     }
 
-    private void dealerTurn() {
+    private void dealerTurn(final boolean userBlackjack) {
 //will deal a card and update the image and score
         hit.setEnabled(false);
         stand.setEnabled(false);
@@ -181,9 +181,11 @@ public class singlePlayer extends AppCompatActivity {
                 int recentCard = dealCard(0);
                 console.setText("Your hand total: " + userTurnTotal + "\nThe dealer's hand total: " + dealerTurnTotal);
                 if (dealerTurnTotal <= 16 && dealerTurnTotal > 0) { //Fix the problem when dealer busts!!
-                    dealerTurn();
+                    dealerTurn(false);
+                } else if (userBlackjack == true && dealerTurnTotal == 21) {
+                    endDealerTurn(true); // dealer and user both got blackjack, draw
                 } else {
-                    endDealerTurn();
+                    endDealerTurn(false);
                 }
             }
         }, 4000);
@@ -197,18 +199,22 @@ public class singlePlayer extends AppCompatActivity {
     }
 
 
-    private void endDealerTurn() {
+    private void endDealerTurn(boolean dealerBlackjack) {
         //compare with user to see if user or computer has a greater total
         console.setText("Round over!");
         if(userTurnTotal > dealerTurnTotal)
-        {
+        { // user wins
             userTotal++;
             console.setText("User wins this round with " + userTurnTotal + " points! \nDealer score was " + dealerTurnTotal);
             userTurnTotal = 0;
             dealerTurnTotal = 0;
             score.setText("Your Wins: "+ userTotal + " Dealer Wins: "+dealerTotal);
-        }
-        else
+        } else if (dealerBlackjack == true) { // dealer got blackjack and user did too
+            console.setText("DRAW! Dealer also had blackjack!");
+            userTurnTotal = 0;
+            dealerTurnTotal = 0;
+            score.setText("Your Wins: "+ userTotal + " Dealer Wins: "+dealerTotal);
+        } else
         {
             dealerTotal++;
             console.setText("Dealer wins this round with " + dealerTurnTotal + " points! \nYour score was " + userTurnTotal);
@@ -316,7 +322,7 @@ public class singlePlayer extends AppCompatActivity {
         stand = findViewById(R.id.stand);
         stand.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                dealerTurn();
+                dealerTurn(false);
                 console.setText("Your hand total: " + userTurnTotal + "\nDealer hand total: " + dealerTurnTotal);
             };
         });
