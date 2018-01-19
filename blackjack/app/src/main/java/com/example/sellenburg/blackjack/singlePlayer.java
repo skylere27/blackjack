@@ -94,9 +94,8 @@ public class singlePlayer extends AppCompatActivity {
     ArrayList<ImageView> P0visuals;
     ArrayList<ImageView> P1visuals;
     ArrayList<ImageView> P2visuals;
+    ArrayList<ArrayList<ImageView>> handVisuals;
     //lists of the views where the drawables are displayed
-
-    List<ArrayList<ImageView>> handVisuals = Arrays.asList(P0visuals, P1visuals, P2visuals);
 
     public static final ArrayList<Integer> cardsList =  new ArrayList<Integer>(Arrays.asList(R.drawable.ace_of_clubs, R.drawable.ace_of_diamonds, R.drawable.ace_of_hearts, R.drawable.ace_of_spades,
             R.drawable.eight_of_clubs, R.drawable.eight_of_diamonds, R.drawable.eight_of_hearts, R.drawable.eight_of_spades,
@@ -155,8 +154,10 @@ public class singlePlayer extends AppCompatActivity {
     }
 //ie computer
 
+
     private void dealerTurn() {
 //will deal a card and update the image and score
+        /*
         dealCard(0);
         while(dealerTurnTotal <= 16)
         {
@@ -175,12 +176,19 @@ public class singlePlayer extends AppCompatActivity {
         {
             standClicked();
         }
+        */
     }
 
 
     public void updateHandView(int p,int id){
         //p=0 indicates dealer, p=1 indicates P1, p=2 indicates P2, etc
         //id indicates new card
+        Log.d("myDebugTag", "p: " + String.valueOf(p) +
+                "; id: " + String.valueOf(id) +
+                "; handVisuals: " + String.valueOf(handVisuals) +
+                "; P0Visuals: " + String.valueOf(P0visuals) +
+                "; P1Visuals: " + String.valueOf(P1visuals) +
+                "; handVisuals.get(p): " + String.valueOf(handVisuals.get(p)));
         ArrayList<ImageView> handVisual = handVisuals.get(p);
 
         int cardsInHand = 0;
@@ -227,6 +235,8 @@ public class singlePlayer extends AppCompatActivity {
         dealer6 = findViewById(R.id.dealer6);
         dealer7 = findViewById(R.id.dealer7);
         P0visuals = new ArrayList<ImageView>(Arrays.asList(dealer1, dealer2, dealer3, dealer4, dealer5, dealer6, dealer7));
+
+        handVisuals = new ArrayList<ArrayList<ImageView>>(Arrays.asList(P0visuals, P1visuals, P2visuals));
 
         card3.setVisibility(View.GONE);
         card4.setVisibility(View.GONE);
