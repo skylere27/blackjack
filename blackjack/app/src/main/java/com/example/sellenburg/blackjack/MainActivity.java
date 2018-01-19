@@ -17,8 +17,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     // this is the home screen, decides which game to play
 
-    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-
     Button single;
     Button two;
     ArrayList<Drawable> P0hand; //dealer hand
@@ -59,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
     // Called when user taps single-player mode
     public void singleMode(View view) {
         Intent intent = new Intent(this, singlePlayer.class); //creates a new page
-        //String text = "YOU ARE IN SINGLE PLAYER MODE";
-        //intent.putExtra(text);
         startActivity(intent);
     }
 
@@ -90,8 +86,6 @@ public class MainActivity extends AppCompatActivity {
     // Called when user taps two-payer mode
     public void twoMode(View view) {
         Intent intent = new Intent(this, twoPlayer.class);
-        //String text = "YOU ARE IN TWO PLAYER MODE";
-        //intent.putExtra(text);
         startActivity(intent);
     }
 }

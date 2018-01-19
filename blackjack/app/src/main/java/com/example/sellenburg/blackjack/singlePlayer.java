@@ -2,7 +2,10 @@ package com.example.sellenburg.blackjack;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.Button;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Arrays;
@@ -36,6 +39,24 @@ public class singlePlayer extends AppCompatActivity {
 
     //dealCard branch
 
+    TextView score;
+    TextView console;
+    ImageView card1;
+    ImageView card2;
+    ImageView card3;
+    ImageView card4;
+    ImageView card5;
+    ImageView card6;
+    ImageView card7;
+    ImageView dealer1;
+    ImageView dealer2;
+    ImageView dealer3;
+    ImageView dealer4;
+    ImageView dealer5;
+    ImageView dealer6;
+    ImageView dealer7;
+    Button hit;
+    Button stand;
     int userTotal = 0;
     int userTurnTotal = 0;
     int dealerTotal = 0;
@@ -55,15 +76,80 @@ public class singlePlayer extends AppCompatActivity {
             R.drawable.ten_of_clubs, R.drawable.ten_of_diamonds, R.drawable.ten_of_hearts, R.drawable.ten_of_spades,
             R.drawable.two_of_clubs, R.drawable.two_of_diamonds, R.drawable.two_of_hearts, R.drawable.two_of_spades));
 
+    // Skyler's note: use dice code except change the die image to be each card and make sure the cards have values!
+    // attribute a point value to each card
+    // roll is now dealCard
+    // hit calls deal
+    // compturn that happens when you stay
+
+    private int dealCard() {
+        return cardsList.remove(0);
+    }
+
+    public void hitClicked() {
+
+    }
+
+    private void standClicked() {
+
+    }
+
+    private void dealerTurn() {
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_player);
-
         Collections.shuffle(cardsList);
-    }
 
-    private int dealCard() {
-        return cardsList.remove(0);
+        score = findViewById(R.id.score);
+        console = findViewById(R.id.console);
+        card1 = findViewById(R.id.card1);
+        card2 = findViewById(R.id.card2);
+        card3 = findViewById(R.id.card3);
+        card3.setEnabled(false);
+        card4 = findViewById(R.id.card4);
+        card4.setEnabled(false);
+        card5 = findViewById(R.id.card5);
+        card5.setEnabled(false);
+        card6 = findViewById(R.id.card6);
+        card6.setEnabled(false);
+        card7 = findViewById(R.id.card7);
+        card7.setEnabled(false);
+        dealer1 = findViewById(R.id.dealer1);
+        dealer2 = findViewById(R.id.dealer2);
+        dealer3 = findViewById(R.id.dealer3);
+        dealer3.setEnabled(false);
+        dealer4 = findViewById(R.id.dealer4);
+        dealer4.setEnabled(false);
+        dealer5 = findViewById(R.id.dealer5);
+        dealer5.setEnabled(false);
+        dealer6 = findViewById(R.id.dealer6);
+        dealer6.setEnabled(false);
+        dealer7 = findViewById(R.id.dealer7);
+        dealer7.setEnabled(false);
+
+        // ON START
+        card1.setImageResource(R.drawable.ace_of_diamonds); // defaults at ace of diamonds
+        card2.setImageResource(R.drawable.king_of_clubs);
+
+        // CLICK HIT
+        hit = findViewById(R.id.hit);
+        hit.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                hitClicked();
+            };
+        });
+
+        // CLICK STAND
+        stand = findViewById(R.id.stand);
+        stand.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                standClicked();
+                dealerTurn();
+            };
+        });
     }
 }
