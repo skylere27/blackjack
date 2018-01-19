@@ -85,7 +85,7 @@ public class singlePlayer extends AppCompatActivity {
     }};
 
     int userTotal = 0;
-    int userTurnTotal = 0;
+    int userTurnTotal = 0; //means until someone wins
     int dealerTotal = 0;
     int dealerTurnTotal = 0;
     int cardsInHand = 0;
@@ -135,6 +135,9 @@ public class singlePlayer extends AppCompatActivity {
         return card;
     }
 
+
+
+
     public void hitClicked() {
         //cardImages.get(cardsInHand).setImageResource(dealCard())
         //
@@ -143,9 +146,28 @@ public class singlePlayer extends AppCompatActivity {
     private void standClicked() {
 
     }
+//ie computer
 
     private void dealerTurn() {
-
+//will deal a card and update the image and score
+        dealCard(0);
+        while(dealerTurnTotal <= 16)
+        {
+            dealCard(0);
+        }
+        if(dealerTurnTotal == 21)
+        {
+            console = findViewById(R.id.console);
+            score = findViewById(R.id.score);
+            console.setText("Computer wins this round!");
+            dealerTotal++;
+            dealerTurnTotal = 0;
+            score.setText("Your Wins: "+userTotal + " Dealer Wins: "+dealerTotal);
+        }
+        else if(dealerTurnTotal >= 17)
+        {
+            standClicked();
+        }
     }
 
     /* I don't think this makes sense anymore based on how other
@@ -216,13 +238,17 @@ public class singlePlayer extends AppCompatActivity {
         // ON START - FIX, CODE THIS? on click of a START GAME button?
         card1.setImageResource(dealCard(1)); // defaults at ace of diamonds
         card2.setImageResource(dealCard(1));
+        dealer1.setImageResource(dealCard(0));
+        dealer2.setImageResource(R.drawable.card_back);
         cardsInHand = 2;
+        console.setText("Your hand total: " + userTurnTotal);
 
         // CLICK HIT
         hit = findViewById(R.id.hit);
         hit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                hitClicked();
+                dealCard(1);
+                console.setText("Your hand total: " + userTurnTotal);
             };
         });
 
@@ -230,8 +256,8 @@ public class singlePlayer extends AppCompatActivity {
         stand = findViewById(R.id.stand);
         stand.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                standClicked();
                 dealerTurn();
+                console.setText("Your hand total: " + userTurnTotal + "Dealer hand total: " + dealerTurnTotal);
             };
         });
     }
