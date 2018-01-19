@@ -70,6 +70,7 @@ public class singlePlayer extends AppCompatActivity {
     ImageView dealer7;
     Button hit;
     Button stand;
+    Button newround;
     ArrayList<Integer> deck;
     HashMap<Integer, ArrayList<Integer>> valueToCards = new  HashMap<Integer, ArrayList<Integer>> () {{
         put(11, new ArrayList<Integer>(Arrays.asList(R.drawable.ace_of_clubs, R.drawable.ace_of_diamonds, R.drawable.ace_of_hearts, R.drawable.ace_of_spades)));
@@ -135,8 +136,10 @@ public class singlePlayer extends AppCompatActivity {
             Log.i("DEALERTOTAL", ""+dealerTurnTotal);
             if (dealerTurnTotal == 21) {
                 console.setText("BLACKJACK! Computer got blackjack!");
+                newround.setEnabled(true);
             } else if (dealerTurnTotal > 21) {
                 console.setText("BUST! Computer busted.");
+                newround.setEnabled(true);
                 dealerTurnTotal = 0;
                 // not sure what happens here
             }
@@ -156,6 +159,8 @@ public class singlePlayer extends AppCompatActivity {
                 console.setText("BUST! You busted with " + userTurnTotal + ".");
                 dealerTotal += 1;
                 userTurnTotal = 0;
+                hit.setEnabled(false);
+                stand.setEnabled(false);
                 // round ends!! might call for reconstruction of hit method...like putting all of this into hit instead of deal
             }
             //assuming hand size counter has NOT been updated
@@ -167,13 +172,15 @@ public class singlePlayer extends AppCompatActivity {
 
     private void dealerTurn() {
 //will deal a card and update the image and score
+        hit.setEnabled(false);
+        stand.setEnabled(false);
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 int recentCard = dealCard(0);
-                console.setText("The dealer's hand total: " + dealerTurnTotal);
-                if (dealerTurnTotal <= 16) {
+                console.setText("Your hand total: " + userTurnTotal + "\nThe dealer's hand total: " + dealerTurnTotal);
+                if (dealerTurnTotal <= 16 && dealerTurnTotal > 0) { //Fix the problem when dealer busts!!
                     dealerTurn();
                 } else {
                     endDealerTurn();
@@ -191,35 +198,26 @@ public class singlePlayer extends AppCompatActivity {
 
 
     private void endDealerTurn() {
-        if(dealerTurnTotal == 21)
+        //compare with user to see if user or computer has a greater total
+        console.setText("Round over!");
+        if(userTurnTotal > dealerTurnTotal)
         {
-            console.setText("Dealer wins this round!");
-            dealerTotal++;
+            userTotal++;
+            console.setText("User wins this round with " + userTurnTotal + " points! \nDealer score was " + dealerTurnTotal);
+            userTurnTotal = 0;
             dealerTurnTotal = 0;
-            score.setText("Your Wins: "+ userTotal + " Dealer Wins: " + dealerTotal);
+            score.setText("Your Wins: "+ userTotal + " Dealer Wins: "+dealerTotal);
         }
-        else if(dealerTurnTotal >= 17)
+        else
         {
-            //compare with user to see if user or computer has a greater total
-            console.setText("Round over!");
-            if(userTurnTotal > dealerTurnTotal)
-            {
-                userTotal++;
-                userTurnTotal = 0;
-                console.setText("User wins this round!");
-                score.setText("Your Wins: "+userTotal + " Dealer Wins: "+dealerTotal);
-            }
-            else
-            {
-                dealerTotal++;
-                console.setText("Dealer wins this round with " + dealerTurnTotal + "!! \nYour score was " + userTurnTotal);
-                dealerTurnTotal = 0;
-                score.setText("Your Wins: "+userTotal + " Dealer Wins: "+dealerTotal);
-            }
+            dealerTotal++;
+            console.setText("Dealer wins this round with " + dealerTurnTotal + " points! \nYour score was " + userTurnTotal);
+            dealerTurnTotal = 0;
+            userTurnTotal = 0;
+            score.setText("Your Wins: "+userTotal + " Dealer Wins: "+dealerTotal);
         }
     }
-
-
+    
     public void updateHandView(int p,int id){
         //p=0 indicates dealer, p=1 indicates P1, p=2 indicates P2, etc
         //id indicates new card
@@ -255,6 +253,8 @@ public class singlePlayer extends AppCompatActivity {
 
         score = findViewById(R.id.score);
         console = findViewById(R.id.console);
+        newround = findViewById(R.id.newround);
+        newround.setEnabled(false);
 
         deck = cardsList;
         Collections.shuffle(deck); // deck is shuffled
@@ -320,5 +320,14 @@ public class singlePlayer extends AppCompatActivity {
                 console.setText("Your hand total: " + userTurnTotal + "\nDealer hand total: " + dealerTurnTotal);
             };
         });
+
+        //CLICK NEWROUND
+        newround.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                userTurnTotal = 0;
+                dealerTurnTotal = 0;
+            };
+        });
+
     }
 }
