@@ -96,6 +96,16 @@ public class singlePlayer extends AppCompatActivity {
     // On deal, updates image and score
     private int dealCard(int p) {
         int card = deck.remove(0);
+        int cardValue;
+        for (HashMap.Entry<Integer, ArrayList<Integer>> entry : valueToCards.entrySet())
+        {
+            for (int i; i < entry.size(); i++) {
+                if (entry.get(i) == card) {
+                    cardValue = valueToCards;
+                }
+            }
+        }
+        // potentially change hashmap to card: value
         if (p == 0) { // dealer turn
             // updates dealer hand and dealer score
 
@@ -195,8 +205,8 @@ public class singlePlayer extends AppCompatActivity {
         dealer7.setVisibility(View.GONE);
 
         // ON START - FIX, CODE THIS? on click of a START GAME button?
-        card1.setImageResource(dealCard()); // defaults at ace of diamonds
-        card2.setImageResource(dealCard());
+        card1.setImageResource(dealCard(1)); // defaults at ace of diamonds
+        card2.setImageResource(dealCard(1));
         cardsInHand = 2;
 
         // CLICK HIT
