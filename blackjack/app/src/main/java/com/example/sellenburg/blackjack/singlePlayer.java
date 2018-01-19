@@ -139,7 +139,7 @@ public class singlePlayer extends AppCompatActivity {
             } else if (dealerTurnTotal > 21) {
                 console.setText("BUST! Computer busted.");
                 newround.setEnabled(true);
-                dealerTurnTotal = 0;
+                //dealerTurnTotal = 0;
                 // not sure what happens here
             }
         } else if (p == 1) { // player 1
@@ -149,6 +149,9 @@ public class singlePlayer extends AppCompatActivity {
             console.setText("Your hand total: " + userTurnTotal);
             if (userTurnTotal == 21) {
                 console.setText("BLACKJACK! You got blackjack!");
+                hit.setEnabled(false);
+                stand.setEnabled(false);
+                newround.setEnabled(true);
                 // will reveal dealer's card and determine win
             } else if (userTurnTotal > 21) {
                 console.setText("BUST! You busted with " + userTurnTotal + ".");
@@ -156,6 +159,7 @@ public class singlePlayer extends AppCompatActivity {
                 userTurnTotal = 0;
                 hit.setEnabled(false);
                 stand.setEnabled(false);
+                newround.setEnabled(true);
                 // round ends!! might call for reconstruction of hit method...like putting all of this into hit instead of deal
             }
         }
@@ -195,17 +199,19 @@ public class singlePlayer extends AppCompatActivity {
         {
             userTotal++;
             console.setText("User wins this round with " + userTurnTotal + " points! \nDealer score was " + dealerTurnTotal);
-            userTurnTotal = 0;
-            dealerTurnTotal = 0;
             score.setText("Your Wins: "+ userTotal + " Dealer Wins: "+dealerTotal);
+            hit.setEnabled(false);
+            stand.setEnabled(false);
+            newround.setEnabled(true);
         }
         else
         {
             dealerTotal++;
             console.setText("Dealer wins this round with " + dealerTurnTotal + " points! \nYour score was " + userTurnTotal);
-            dealerTurnTotal = 0;
-            userTurnTotal = 0;
             score.setText("Your Wins: "+userTotal + " Dealer Wins: "+dealerTotal);
+            hit.setEnabled(false);
+            stand.setEnabled(false);
+            newround.setEnabled(true);
         }
     }
 
@@ -306,8 +312,20 @@ public class singlePlayer extends AppCompatActivity {
         //CLICK NEWROUND
         newround.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                deck = cardsList;
+                Collections.shuffle(deck);
                 userTurnTotal = 0;
                 dealerTurnTotal = 0;
+                card1.setImageResource(dealCard(1)); // defaults at ace of diamonds
+                card2.setImageResource(dealCard(1));
+                dealer1.setImageResource(dealCard(0));
+                dealer2.setImageResource(R.drawable.card_back);
+                Log.i("ONSTART", "DEALT TWO CARDS EACH. PlayerTotal: " + userTurnTotal + " DealerTotal: " + dealerTurnTotal);
+                cardsInHand = 2;
+                console.setText("Your hand total: " + userTurnTotal);
+                hit.setEnabled(true);
+                stand.setEnabled(true);
+                newround.setEnabled(false);
             };
         });
 
