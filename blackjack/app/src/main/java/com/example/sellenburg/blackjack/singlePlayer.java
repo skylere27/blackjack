@@ -70,6 +70,7 @@ public class singlePlayer extends AppCompatActivity {
     ImageView dealer7;
     Button hit;
     Button stand;
+    Button newround;
     ArrayList<Integer> deck;
     HashMap<Integer, ArrayList<Integer>> valueToCards = new  HashMap<Integer, ArrayList<Integer>> () {{
         put(11, new ArrayList<Integer>(Arrays.asList(R.drawable.ace_of_clubs, R.drawable.ace_of_diamonds, R.drawable.ace_of_hearts, R.drawable.ace_of_spades)));
@@ -134,8 +135,10 @@ public class singlePlayer extends AppCompatActivity {
             Log.i("DEALERTOTAL", ""+dealerTurnTotal);
             if (dealerTurnTotal == 21) {
                 console.setText("BLACKJACK! Computer got blackjack!");
+                newround.setEnabled(true);
             } else if (dealerTurnTotal > 21) {
                 console.setText("BUST! Computer busted.");
+                newround.setEnabled(true);
                 dealerTurnTotal = 0;
                 // not sure what happens here
             }
@@ -238,6 +241,8 @@ public class singlePlayer extends AppCompatActivity {
 
         score = findViewById(R.id.score);
         console = findViewById(R.id.console);
+        newround = findViewById(R.id.newround);
+        newround.setEnabled(false);
 
         deck = cardsList;
         Collections.shuffle(deck); // deck is shuffled
@@ -297,5 +302,14 @@ public class singlePlayer extends AppCompatActivity {
                 console.setText("Your hand total: " + userTurnTotal + "\nDealer hand total: " + dealerTurnTotal);
             };
         });
+
+        //CLICK NEWROUND
+        newround.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                userTurnTotal = 0;
+                dealerTurnTotal = 0;
+            };
+        });
+
     }
 }
